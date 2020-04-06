@@ -425,7 +425,7 @@ ckpt_callback = nemo_core.CheckpointCallback(
     step_freq=args.save_step_freq,
 )
 
-ckpt_eval = nemo.core.EvaluatorCallback(
+eval_callback = nemo.core.EvaluatorCallback(
     eval_tensors=eval_log_tensors,
     user_iter_callback=nemo_nlp.callbacks.lm_bert_callback.eval_iter_callback,
     user_epochs_done_callback=nemo_nlp.callbacks.lm_bert_callback.eval_epochs_done_callback,
@@ -461,7 +461,7 @@ if args.num_iters < 0:
 else:
     optimization_params['max_steps'] = args.num_iters
 
-call_backs = [train_callback, ckpt_callback, ckpt_eval]
+call_backs = [train_callback, ckpt_callback, eval_callback]
 
 if 'data_preprocessed' in sys.argv:
     call_backs = [train_callback, ckpt_callback]
